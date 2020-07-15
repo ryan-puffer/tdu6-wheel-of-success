@@ -52,6 +52,7 @@ function checkLetter(button) {
 			match = button.textContent;
 			lis[i].style.color = 'black';
 			lis[i].style.backgroundColor = '#78CF82';
+			lis[i].className = 'letter show';
 		}
 	}
 	return match;
@@ -61,13 +62,33 @@ qwerty.addEventListener('click', (event) => {
 	const button = event.target;
 	if (button.tagName === 'BUTTON') {
 		button.className = 'chosen';
+		button.setAttribute('disabled', 'true');
 	}
 	const checkedLetter = checkLetter(button);
 	const liveHeart = document.querySelectorAll('.tries');
 	const lostHeart = document.createElement('li');
+	lostHeart.innerHTML = "<img src = 'images/lostHeart.png' height='35px' width='30px'>";
+	lostHeart.style.marginRight = '4px';
 	if (checkedLetter === null) {
 		hearts.removeChild(liveHeart[0]);
-
+		hearts.appendChild(lostHeart);
 		missed += 1;
 	}
+	checkWin();
 });
+
+function checkWin() {
+	const possibleLetters = document.querySelectorAll('ul .letter');
+	const actualLetters = document.querySelectorAll('ul .show');
+	if (possibleLetters.length === actualLetters.length) {
+		startOverlay.classList.add('win');
+		startOverlay.firstElementChild.textContent = 'You won!';
+		startOverlay.style.display = 'flex';
+	}
+	if (missed > 4) {
+		startOverlay.classList.add('lose');
+		startOverlay.firstElementChild.textContent = 'Try again!';
+		startOverlay.style.display = 'flex';
+	}
+	console.log(possibleLetters, actualLetters);
+}

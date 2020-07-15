@@ -3,6 +3,7 @@ const startOverlay = document.querySelector('#overlay');
 const qwerty = document.querySelector('#qwerty');
 const phraseDiv = document.querySelector('#phrase');
 const ul = document.querySelector('ul');
+const hearts = document.querySelector('ol');
 
 let missed = 0;
 
@@ -39,5 +40,28 @@ function createGameBoard(arr) {
 		}
 	}
 }
-//creates lis in ul that matches the num of substrings in chosenPhrase
-//
+
+function checkLetter(button) {
+	const lis = document.querySelectorAll('.letter');
+	let match = null;
+	for (let i = 0; i < lis.length; i++) {
+		if (button.textContent.toLowerCase() === lis[i].textContent.toLowerCase()) {
+			button.className = 'show';
+			match = button.textContent;
+		}
+	}
+	return match;
+}
+
+qwerty.addEventListener('click', (event) => {
+	const button = event.target;
+	if (button.tagName === 'BUTTON') {
+		button.className = 'chosen';
+	}
+	const checkedLetter = checkLetter(button);
+	const liveHeart = document.querySelectorAll('.tries');
+	if (checkedLetter === null) {
+		hearts.removeChild(liveHeart);
+		missed += 1;
+	}
+});

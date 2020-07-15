@@ -33,11 +33,13 @@ function createGameBoard(arr) {
 	for (let i = 0; i < arr.length; i++) {
 		const li = document.createElement('li');
 		li.textContent = arr[i];
-		ul.appendChild(li);
 		//if li is a letter apply classname letter
 		if (arr[i] != ' ') {
 			li.className = 'letter';
+		} else {
+			li.className = 'space';
 		}
+		ul.appendChild(li);
 	}
 }
 
@@ -48,6 +50,8 @@ function checkLetter(button) {
 		if (button.textContent.toLowerCase() === lis[i].textContent.toLowerCase()) {
 			button.className = 'show';
 			match = button.textContent;
+			lis[i].style.color = 'black';
+			lis[i].style.backgroundColor = '#78CF82';
 		}
 	}
 	return match;
@@ -60,8 +64,10 @@ qwerty.addEventListener('click', (event) => {
 	}
 	const checkedLetter = checkLetter(button);
 	const liveHeart = document.querySelectorAll('.tries');
+	const lostHeart = document.createElement('li');
 	if (checkedLetter === null) {
-		hearts.removeChild(liveHeart);
+		hearts.removeChild(liveHeart[0]);
+
 		missed += 1;
 	}
 });

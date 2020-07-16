@@ -4,9 +4,9 @@ const qwerty = document.querySelector('#qwerty');
 const keyrow = document.querySelectorAll('.keyrow');
 const keys = document.querySelectorAll('.keyrow button');
 const phraseDiv = document.querySelector('#phrase');
-const phraseLetters = document.querySelectorAll('ul li');
 const ul = document.querySelector('ul');
 const hearts = document.querySelector('ol');
+const tries = document.querySelectorAll('ol li');
 
 let missed = 0;
 
@@ -78,7 +78,7 @@ qwerty.addEventListener('click', (event) => {
 	const lostHeart = document.createElement('li');
 	lostHeart.innerHTML = "<img src = 'images/lostHeart.png' height='35px' width='30px'>";
 	lostHeart.style.marginRight = '4px';
-	if (checkedLetter === null) {
+	if (checkedLetter === null && button.tagName === 'BUTTON') {
 		hearts.removeChild(liveHeart[0]);
 		hearts.appendChild(lostHeart);
 		missed += 1;
@@ -119,6 +119,12 @@ function resetGame() {
 	ul.innerHTML = '';
 
 	//reset hearts
+	hearts.innerHTML =
+		'<li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li> \
+        <li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li> \
+        <li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li> \
+        <li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li> \
+        <li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li>';
 
 	//set missed to 0
 	missed = 0;

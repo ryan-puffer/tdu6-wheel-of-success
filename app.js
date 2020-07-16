@@ -21,10 +21,10 @@ const phrases = [
 const phraseArray = chooseRandomPhrase(phrases);
 
 startGame.addEventListener('click', function() {
-	if (startGame.textContent.toLowerCase() === 'start game') {
+	if (startGame.textContent === 'Start Game') {
 		startOverlay.style.display = 'none';
 		createGameBoard(phraseArray);
-	} else {
+	} else if ((startGame.textContent = 'Want to play again?')) {
 		resetGame();
 		createGameBoard(chooseRandomPhrase(phrases));
 	}
@@ -105,6 +105,7 @@ function checkWin() {
 
 function resetGame() {
 	startOverlay.style.display = 'none';
+	startOverlay.classList.remove('win', 'lose');
 	//reset keyboard buttons
 
 	for (let i = 0; i < keys.length; i++) {
@@ -115,9 +116,7 @@ function resetGame() {
 	}
 
 	//reset game board
-	for (let i = 0; i < phraseLetters.length; i++) {
-		phraseLetters[i].remove();
-	}
+	ul.innerHTML = '';
 
 	//reset hearts
 

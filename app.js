@@ -78,8 +78,9 @@ qwerty.addEventListener('click', (event) => {
 		missed += 1;
 	}
 	checkWin();
-	resetGame();
 });
+
+resetGame();
 
 function checkWin() {
 	const possibleLetters = document.querySelectorAll('ul .letter');
@@ -100,7 +101,10 @@ function checkWin() {
 
 function resetGame() {
 	//reset keyboard buttons
-	keys.classList.remove('chosen', 'show');
+
+	for (let i = 0; i < keys.length; i++) {
+		keys[i].classList.remove('chosen', 'show');
+	}
 
 	//reset game board
 	phraseArray.length = 0;

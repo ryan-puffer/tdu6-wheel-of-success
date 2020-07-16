@@ -97,6 +97,7 @@ button {
 .show {
 	color: #000;
 	background-color: #76ce82;
+	animation: fadeInOpacity 1 ease-in .4s;
 }
 
 /* Keyboard */
@@ -104,6 +105,11 @@ button {
 .keyrow {
 	display: flex;
 	justify-content: center;
+	transition: .2s all;
+}
+
+.keyrow button:hover {
+	transform: scale(1.1);
 }
 
 .chosen {
@@ -164,4 +170,13 @@ button {
 .lose a {
 	color: var(--color-lose);
 	text-decoration: none;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }

@@ -1,6 +1,8 @@
 const startGame = document.querySelector('.btn__reset');
 const startOverlay = document.querySelector('#overlay');
 const qwerty = document.querySelector('#qwerty');
+const keyrow = document.querySelectorAll('.keyrow');
+const keys = document.querySelectorAll('.keyrow button');
 const phraseDiv = document.querySelector('#phrase');
 const ul = document.querySelector('ul');
 const hearts = document.querySelector('ol');
@@ -17,9 +19,10 @@ const phrases = [
 
 startGame.addEventListener('click', function() {
 	startOverlay.style.display = 'none';
-	const phraseArray = chooseRandomPhrase(phrases);
-	createGameBoard(phraseArray);
 });
+
+const phraseArray = chooseRandomPhrase(phrases);
+createGameBoard(phraseArray);
 
 function chooseRandomPhrase(arr) {
 	//generate a random number between 1 and phrases.length
@@ -75,6 +78,7 @@ qwerty.addEventListener('click', (event) => {
 		missed += 1;
 	}
 	checkWin();
+	resetGame();
 });
 
 function checkWin() {
@@ -84,11 +88,25 @@ function checkWin() {
 		startOverlay.classList.add('win');
 		startOverlay.firstElementChild.textContent = 'You won!';
 		startOverlay.style.display = 'flex';
+		startGame.textContent = 'Want to play again?';
 	}
 	if (missed > 4) {
 		startOverlay.classList.add('lose');
 		startOverlay.firstElementChild.textContent = 'Try again!';
 		startOverlay.style.display = 'flex';
+		startGame.textContent = 'Want to play again?';
 	}
-	console.log(possibleLetters, actualLetters);
+}
+
+function resetGame() {
+	//reset keyboard buttons
+	keys.classList.remove('chosen', 'show');
+
+	//reset game board
+	phraseArray.length = 0;
+
+	//reset hearts
+
+	//set missed to 0
+	missed = 0;
 }

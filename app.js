@@ -1,21 +1,18 @@
 const startGame = document.querySelector('.btn__reset');
 const startOverlay = document.querySelector('#overlay');
 const qwerty = document.querySelector('#qwerty');
-const keyrow = document.querySelectorAll('.keyrow');
 const keys = document.querySelectorAll('.keyrow button');
-const phraseDiv = document.querySelector('#phrase');
 const ul = document.querySelector('ul');
 const hearts = document.querySelector('ol');
-const tries = document.querySelectorAll('ol li');
 
 let missed = 0;
 
 const phrases = [
-	'this is a test',
-	'again this is a test',
-	'you know this is a test',
-	'test test test test',
-	'lots of tests here'
+	'i have many leather bound books',
+	'i love lamp',
+	'milk was a bad choice',
+	'sixty percent of the time it works every time',
+	'i immediately regret this decision'
 ];
 
 const phraseArray = chooseRandomPhrase(phrases);
@@ -107,17 +104,14 @@ function resetGame() {
 	startOverlay.style.display = 'none';
 	startOverlay.classList.remove('win', 'lose');
 	//reset keyboard buttons
-
 	for (let i = 0; i < keys.length; i++) {
 		keys[i].classList.remove('chosen', 'show');
 		if ((keys[i].disabled = true)) {
 			keys[i].disabled = false;
 		}
 	}
-
 	//reset game board
 	ul.innerHTML = '';
-
 	//reset hearts
 	hearts.innerHTML =
 		'<li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li> \
@@ -125,7 +119,6 @@ function resetGame() {
         <li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li> \
         <li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li> \
         <li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li>';
-
 	//set missed to 0
 	missed = 0;
 }

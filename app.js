@@ -4,6 +4,7 @@ const qwerty = document.querySelector('#qwerty');
 const keyrow = document.querySelectorAll('.keyrow');
 const keys = document.querySelectorAll('.keyrow button');
 const phraseDiv = document.querySelector('#phrase');
+const phraseLetters = document.querySelectorAll('ul li');
 const ul = document.querySelector('ul');
 const hearts = document.querySelector('ol');
 
@@ -17,12 +18,17 @@ const phrases = [
 	'lots of tests here'
 ];
 
-startGame.addEventListener('click', function() {
-	startOverlay.style.display = 'none';
-});
-
 const phraseArray = chooseRandomPhrase(phrases);
-createGameBoard(phraseArray);
+
+startGame.addEventListener('click', function() {
+	if (startGame.textContent.toLowerCase() === 'start game') {
+		startOverlay.style.display = 'none';
+		createGameBoard(phraseArray);
+	} else {
+		resetGame();
+		createGameBoard(chooseRandomPhrase(phrases));
+	}
+});
 
 function chooseRandomPhrase(arr) {
 	//generate a random number between 1 and phrases.length
@@ -80,8 +86,6 @@ qwerty.addEventListener('click', (event) => {
 	checkWin();
 });
 
-resetGame();
-
 function checkWin() {
 	const possibleLetters = document.querySelectorAll('ul .letter');
 	const actualLetters = document.querySelectorAll('ul .show');
@@ -100,14 +104,20 @@ function checkWin() {
 }
 
 function resetGame() {
+	startOverlay.style.display = 'none';
 	//reset keyboard buttons
 
 	for (let i = 0; i < keys.length; i++) {
 		keys[i].classList.remove('chosen', 'show');
+		if ((keys[i].disabled = true)) {
+			keys[i].disabled = false;
+		}
 	}
 
 	//reset game board
-	phraseArray.length = 0;
+	for (let i = 0; i < phraseLetters.length; i++) {
+		phraseLetters[i].remove();
+	}
 
 	//reset hearts
 

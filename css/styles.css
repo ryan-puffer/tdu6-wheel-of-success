@@ -48,6 +48,7 @@ button {
 	margin: 6px;
 	border: 1px solid transparent;
 	padding: .5rem 1rem;
+	cursor: pointer;
 	color: var(--color-keys);
 	font-size: var(--font-size-medium);
 	background-color: var(--color-keys-light);
@@ -178,5 +179,28 @@ button {
 	}
 	100% {
 		opacity: 1;
+	}
+}
+
+@media (max-width: 500px) {
+	#qwerty {
+		width: 100%;
+	}
+	button {
+		padding: 5px 6px;
+		margin: 3px 5px;
+	}
+	.letter {
+		height: 25px;
+		width: 25px;
+		padding: 0px 1px 0 1px;
+	}
+}
+
+@media (max-width: 900px) {
+	.letter {
+		height: 45px;
+		width: 45px;
+		padding: 10px 1px 0 1px;
 	}
 }

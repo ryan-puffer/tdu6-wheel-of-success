@@ -3,27 +3,59 @@ const startOverlay = document.querySelector('#overlay');
 const qwerty = document.querySelector('#qwerty');
 const keys = document.querySelectorAll('.keyrow button');
 const ul = document.querySelector('ul');
+const board = document.querySelector('#phrase');
 const hearts = document.querySelector('ol');
 
 let missed = 0;
 
 const phrases = [
-	'i have many leather bound books',
-	'i love lamp',
-	'milk was a bad choice',
-	'sixty percent of the time it works every time',
-	'i immediately regret this decision'
+	'I have many leather bound books',
+	'I love lamp',
+	'Milk was a bad choice',
+	'Sixty percent of the time it works every time',
+	'I immediately regret this decision',
+	'You stay classy San Diego',
+	'Im in a glass case of emotion',
+	'Im kind of a big deal'
 ];
 
 const phraseArray = chooseRandomPhrase(phrases);
 
+
+function appendPhrase(phrase) {
+	const phraseEl = document.createElement('div');
+  	phraseEl.classList.add('board-phrase');
+	phrase.split(' ').forEach(word => {
+  		appendWord(word, phraseEl);
+  });
+  board.appendChild(phraseEl);
+}
+
+function appendWord(word, container) {
+	const wordEl = document.createElement('div');
+  wordEl.classList.add('board-word');
+  
+  word.split('').forEach(letter => {
+  	appendLetter(letter, wordEl);
+  });
+  
+	container.appendChild(wordEl);
+}
+
+function appendLetter(letter, container) {
+	const letterEl = document.createElement('div');
+  letterEl.classList.add('board-letter');
+  letterEl.textContent = letter;
+  container.appendChild(letterEl);
+}
+
 startGame.addEventListener('click', function() {
 	if (startGame.textContent === 'Start Game') {
 		startOverlay.style.display = 'none';
-		createGameBoard(phraseArray);
+		appendPhrase(chooseRandomPhrase(phrases));
 	} else if ((startGame.textContent = 'Want to play again?')) {
 		resetGame();
-		createGameBoard(chooseRandomPhrase(phrases));
+		appendPhrase(chooseRandomPhrase(phrases));
 	}
 });
 
@@ -31,26 +63,26 @@ function chooseRandomPhrase(arr) {
 	//generate a random number between 1 and phrases.length
 	const phrase = Math.floor(Math.random() * arr.length);
 	//return the phrase at that index
-	return arr[phrase].split('');
+	return arr[phrase];
 }
 
 //function that creates a game board
-function createGameBoard(arr) {
-	for (let i = 0; i < arr.length; i++) {
-		const li = document.createElement('li');
-		li.textContent = arr[i];
-		//if li is a letter apply classname letter
-		if (arr[i] != ' ') {
-			li.className = 'letter';
-		} else {
-			li.className = 'space';
-		}
-		ul.appendChild(li);
-	}
-}
+// function createGameBoard(arr) {
+// 	for (let i = 0; i < arr.length; i++) {
+// 		const li = document.createElement('li');
+// 		li.textContent = arr[i];
+// 		//if li is a letter apply classname letter
+// 		if (arr[i] != ' ') {
+// 			li.className = 'letter';
+// 		} else {
+// 			li.className = 'space';
+// 		}
+// 		ul.appendChild(li);
+// 	}
+// }
 
 function checkLetter(button) {
-	const lis = document.querySelectorAll('.letter');
+	const lis = document.querySelectorAll('.board-letter');
 	let match = null;
 	for (let i = 0; i < lis.length; i++) {
 		if (button.textContent.toLowerCase() === lis[i].textContent.toLowerCase()) {
@@ -58,7 +90,7 @@ function checkLetter(button) {
 			match = button.textContent;
 			lis[i].style.color = 'black';
 			lis[i].style.backgroundColor = '#78CF82';
-			lis[i].className = 'letter show';
+			lis[i].className = 'board-letter show';
 		}
 	}
 	return match;
@@ -84,8 +116,8 @@ qwerty.addEventListener('click', (event) => {
 });
 
 function checkWin() {
-	const possibleLetters = document.querySelectorAll('ul .letter');
-	const actualLetters = document.querySelectorAll('ul .show');
+	const possibleLetters = document.querySelectorAll('#phrase .board-letter');
+	const actualLetters = document.querySelectorAll('#phrase .show');
 	if (possibleLetters.length === actualLetters.length) {
 		startOverlay.classList.add('win');
 		startOverlay.firstElementChild.textContent = 'You won!';
@@ -111,7 +143,7 @@ function resetGame() {
 		}
 	}
 	//reset game board
-	ul.innerHTML = '';
+	board.innerHTML = '';
 	//reset hearts
 	hearts.innerHTML =
 		'<li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li> \
